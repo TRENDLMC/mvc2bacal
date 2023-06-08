@@ -54,16 +54,33 @@ public class BoardController extends HttpServlet {
 	try {
 		List<ArticleVO> articlesList=new ArrayList<ArticleVO>();
 		if(action==null) {
-			articlesList = boardService.listArticles();
-			request.setAttribute("articlesList", articlesList);
-			nextPage="/board06/listArticles.jsp";
+			String _section=request.getParameter("section");
+			String _pageNum=request.getParameter("pageNum");
+			int section=Integer.parseInt(((_section==null)?"1":_section));
+			int pageNum=Integer.parseInt(((_pageNum==null)?"1":_pageNum));
+			Map pagingMap=new HashMap();
+			pagingMap.put("section",section);
+			pagingMap.put("pageNum", pageNum);
+			Map articlesMap=boardService.listArticles(pagingMap);
+			articlesMap.put("section", section);
+			articlesMap.put("pageNum", pageNum);
+			request.setAttribute("articlesMap", articlesMap);
+			nextPage="/board07/listArticles.jsp";
 		}else if(action.equals("/listArticles.do")) {
-			articlesList=boardService.listArticles();
-			request.setAttribute("articlesList", articlesList);
-			nextPage="/board06/listArticles.jsp";
-			
+			String _section=request.getParameter("section");
+			String _pageNum=request.getParameter("pageNum");
+			int section=Integer.parseInt(((_section==null)?"1":_section));
+			int pageNum=Integer.parseInt(((_pageNum==null)?"1":_pageNum));
+			Map pagingMap=new HashMap();
+			pagingMap.put("section",section);
+			pagingMap.put("pageNum", pageNum);
+			Map articlesMap=boardService.listArticles(pagingMap);
+			articlesMap.put("section", section);
+			articlesMap.put("pageNum", pageNum);
+			request.setAttribute("articlesMap", articlesMap);
+			nextPage="/board07/listArticles.jsp";
 		}else if(action.equals("/articleForm.do")) {
-			nextPage="/board06/articleForm.jsp";
+			nextPage="/board07/articleForm.jsp";
 			
 		}else if(action.equals("/addArticle.do")) {
 			int articleNO=0;
@@ -92,7 +109,7 @@ public class BoardController extends HttpServlet {
 			String articleNO=request.getParameter("articleNO");
 			articleVO=boardService.viewArticle(Integer.parseInt(articleNO));
 			request.setAttribute("article", articleVO);
-			nextPage="/board06/viewArticle.jsp";
+			nextPage="/board07/viewArticle.jsp";
 		}else if(action.equals("/modArticle.do")) {
 			Map<String,String> articleMap=upload(request,response);
 			int articleNO=Integer.parseInt(articleMap.get("articleNO"));
