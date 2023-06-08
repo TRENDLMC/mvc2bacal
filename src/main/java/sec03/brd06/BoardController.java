@@ -1,4 +1,4 @@
-package sec03.brd05;
+package sec03.brd06;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,14 +57,14 @@ public class BoardController extends HttpServlet {
 		if(action==null) {
 			articlesList = boardService.listArticles();
 			request.setAttribute("articlesList", articlesList);
-			nextPage="/board04/listArticles.jsp";
+			nextPage="/board05/listArticles.jsp";
 		}else if(action.equals("/listArticles.do")) {
 			articlesList=boardService.listArticles();
 			request.setAttribute("articlesList", articlesList);
-			nextPage="/board04/listArticles.jsp";
+			nextPage="/board05/listArticles.jsp";
 			
 		}else if(action.equals("/articleForm.do")) {
-			nextPage="/board04/articleForm.jsp";
+			nextPage="/board05/articleForm.jsp";
 			
 		}else if(action.equals("/addArticle.do")) {
 			int articleNO=0;
@@ -121,12 +121,25 @@ public class BoardController extends HttpServlet {
 			pw.print("<script>" + "  alert('글을 수정했습니다.');" + " location.href='" + request.getContextPath()
 					+ "/board/viewArticle.do?articleNO=" + articleNO + "';" + "</script>");
 			return;
+		}else if(action.equals("/removeArticle.do")) {
+			int articleNO=Integer.parseInt(request.getParameter("articleNO"));
+			List<Integer> articleNOList=boardService.removeArticle(articleNO);
+			for(int _articleNO : articleNOList) {
+				File imgDir=new File(ARTICLE_IMAGE_REPO+"\\"+ _articleNO);
+				if(imgDir.exists()) {
+				FileUtils.deleteDirectory(imgDir);
+				}
+			}
+			PrintWriter pw=response.getWriter();
+			pw.print("<script>" + "  alert('글을 삭제했습니다.');" + " location.href='" + request.getContextPath()
+					+ "/board/listArticles.do';" + "</script>");
+			return;	
 		}
 		RequestDispatcher dispatch=request.getRequestDispatcher(nextPage);
 		dispatch.forward(request, response);
-	}catch (Exception e) {
+		}catch (Exception e) {
 		e.printStackTrace();
-	}
+		}
 	}
 	
 	private Map<String,String> upload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
