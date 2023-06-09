@@ -1,0 +1,21 @@
+drop table t_board CASCADE CONSTRAINTS;
+
+create table t_Board(
+articleNO number(10) primary key,
+parentNO number(10) default 0,
+title varchar2(500)not null,
+content varchar2(4000),
+imageFileName varchar2(100),
+writedate date default sysdate not null,
+id varchar2(10),
+CONSTRAINT fk_id  FOREIGN key(id) REFERENCES t_member(id)
+);
+
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(1,0,'테스트글입니다.','테스트글입니다.',null,sysdate,'hong');
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(2,0,'안녕하세요.','상품후기입니다.',null,sysdate,'hong');
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(3,2,'답변입니다.','상품후기에대한 답변입니다.',null,sysdate,'hong');
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(4,0,'김유신입니다.','김유신테스트글입니다.',null,sysdate,'kim');
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(5,3,'답변입니다.','상품좋습니다..',null,sysdate,'lee');
+INSERT into t_board(articleNo,parentNO,title,content,imageFileName,writedate,id) VALUES(6,2,'상품후기입니다...','이순신씨의 상품 사용후기 올립니다..',null,sysdate,'lee');
+
+commit;
