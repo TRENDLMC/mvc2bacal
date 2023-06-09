@@ -22,19 +22,19 @@
   ### 게시글 작성,수정,삭제기능
   -<B>글 작성기능
   
-<img src='/mkimage/글작성.gif'>
+<img src='/mkimage/'>
           
          
   -<B>글 수정및삭제기능
-<img src='/mkimage/글수정및삭제.gif'>
+<img src='/mkimage/'>
   
   
 
   ### 페이징기능
   -<b>페이징기능
-<img src='/mkimage/페이징.gif'>
+<img src='/mkimage/'>
   
   ### 답글기능
   
-<img src='/mkimage/답글달기.gif'>
+<img src='/mkimage/'>
   
